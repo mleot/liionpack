@@ -112,7 +112,7 @@ def thermal_external(parameter_values=None):
             "calculate heat source for isothermal models": "true",
             "cell geometry": "arbitrary",
             "dimensionality": 0,
-            "thermal": "lumped",
+            "thermal": "isothermal",
         }
     )
 
