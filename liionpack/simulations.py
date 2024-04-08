@@ -140,3 +140,56 @@ def thermal_external(parameter_values=None):
         solver=solver,
     )
     return sim
+
+def thermal_external_DFN(parameter_values=None):
+    """
+    Create a PyBaMM simulation set up for integration with liionpack.
+    External thermal option is used so that temperature dependence can be
+    included in models but temperature supplied by another algorithm. This
+    is useful for packs and cells where thermal connections are seperate or
+    distinct from electrical connections.
+
+    Args:
+        parameter_values (pybamm.ParameterValues):
+            The default is None.
+
+    Returns:
+        sim (pybamm.Simulation):
+            A simulation that can be solved individually or passed into the
+            liionpack solve method
+
+    """
+    # Create the pybamm model
+    model = pybamm.lithium_ion.DFN(
+        options={
+            "calculate heat source for isothermal models": "true",
+            "cell geometry": "arbitrary",
+            "dimensionality": 0,
+            "thermal": "isothermal",
+        }
+    )
+
+    # Add events to the model
+    model = lp.add_events_to_model(model)
+
+    # Set up parameter values
+    if parameter_values is None:
+        parameter_values = pybamm.ParameterValues("Chen2020")
+
+    # Change the ambient temperature to be an input controlled by the
+    # external circuit
+    parameter_values["Ambient temperature [K]"] = pybamm.InputParameter(
+        "Input temperature [K]"
+    )
+    parameter_values["Initial temperature [K]"] = pybamm.InputParameter(
+        "Input temperature [K]"
+    )
+
+    # Set up solver and simulation
+    solver = pybamm.CasadiSolver(mode="safe")
+    sim = pybamm.Simulation(
+        model=model,
+        parameter_values=parameter_values,
+        solver=solver,
+    )
+    return sim

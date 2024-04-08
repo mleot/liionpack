@@ -7,7 +7,7 @@ read a netlist.
 """
 from .simulations import basic_simulation
 from .simulations import thermal_simulation
-from .simulations import thermal_external
+from .simulations import thermal_external, thermal_external_DFN
 from .utils import interp_current
 from .utils import build_inputs_dict
 from .utils import add_events_to_model
