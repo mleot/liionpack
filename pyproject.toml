@@ -34,7 +34,7 @@ dependencies = [
     "openpyxl",
     "pandas",
     "plotly",
-    "pybamm==23.9",
+    "pybamm",
     "ray",
     "redis",
     "scikit-spatial",
