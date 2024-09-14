@@ -7,6 +7,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "liionpack"
+version = "0.1.0"  # Add this line
 description = "A battery pack simulator for PyBaMM"
 readme = "README.md"
 license = "MIT"
@@ -43,16 +44,9 @@ dependencies = [
     "tqdm",
     "nbconvert",
 ]
-dynamic = [
-    "version",
-]
 
 [project.urls]
 "Bug Tracker" = "https://github.com/pybamm-team/liionpack/issues"
 Changelog = "https://github.com/pybamm-team/liionpack/blob/develop/CHANGELOG.md"
 Documentation = "https://liionpack.readthedocs.io/en/latest/"
 Homepage = "https://github.com/pybamm-team/liionpack"
-
-[tool.hatch]
-version.source = "vcs"
-build.hooks.vcs.version-file = "liionpack/_version.py"
