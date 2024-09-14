@@ -21,17 +21,17 @@ def generate_protocol_from_experiment(experiment, flatten=True):
 
     """
     protocol = []
-    for i, step in enumerate(experiment.operating_conditions_steps):
+    for i, step in enumerate(experiment.steps):
         proto = []
         t = step.duration
         dt = step.period
         # if t % dt != 0:
             # raise ValueError("Time must be an integer multiple of the period")
-        typ = step.type
-        if typ not in ["current"]:
+        typ = step.to_dict().get('type')
+        if typ not in ["Current"]:
             raise ValueError("Only constant current operations are supported")
         else:
-            if typ == "current":
+            if typ == "Current":
                 if not step.is_drive_cycle:
                     I = step.value
                     proto.extend([I] * int(np.round(t,5) / np.round(dt,5)))
