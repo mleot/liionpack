@@ -32,14 +32,14 @@ def generate_protocol_from_experiment(experiment, flatten=True):
             raise ValueError("Only constant current operations are supported")
         else:
             if typ == "Current":
-                if not step.is_drive_cycle:
-                    I = step.value
-                    proto.extend([I] * int(np.round(t,5) / np.round(dt,5)))
-                    if i == 0:
-                        # Include initial state when not drive cycle, first op
-                        proto = [proto[0]] + proto
-                else:
-                    proto.extend(step.value.y.tolist())
+                # if not step.is_drive_cycle:
+                I = step.value
+                proto.extend([I] * int(np.round(t,5) / np.round(dt,5)))
+                if i == 0:
+                    # Include initial state when not drive cycle, first op
+                    proto = [proto[0]] + proto
+            else:
+                proto.extend(step.value.y.tolist())
 
         if flatten:
             protocol.extend(proto)
